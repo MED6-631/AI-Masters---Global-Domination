@@ -6,7 +6,22 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour {
 
-    bool isSelected = false;
+    public bool isSelected = false;
     public GameObject selectionCircle;
+    public GameObject marker;
+    public bool hasReachedTarget = false;
 
+    void FixedUpdate()
+    {
+        if(selectionCircle != null)
+        {
+            isSelected = true;
+        }
+        else if (selectionCircle == null)
+        {
+            isSelected = false;
+        }
+
+
+    }
 }

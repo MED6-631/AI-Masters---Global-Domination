@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Steering : MonoBehaviour {
+public class Steering : MonoBehaviour
+{
 
     public float moveSpeed = 5f;
     public Transform t;
@@ -16,9 +17,10 @@ public class Steering : MonoBehaviour {
     public Vector3 moveDir = Vector3.zero;
 
 
-	void FixedUpdate () {
+    void FixedUpdate()
+    {
 
-        
+
 
         AcquireTarget();
 
@@ -31,50 +33,50 @@ public class Steering : MonoBehaviour {
 
 
 
-            Vector3 avgNeighborPos = Vector3.zero;
-            Vector3 avgNeighborDir = Vector3.zero;
+        Vector3 avgNeighborPos = Vector3.zero;
+        Vector3 avgNeighborDir = Vector3.zero;
 
-            int NearbyUnits = 0;
+        int NearbyUnits = 0;
 
-            Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, 15);
+        Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, 15);
 
-            for (int i = 0; i < nearbyObjects.Length; i++)
+        for (int i = 0; i < nearbyObjects.Length; i++)
+        {
+            if (nearbyObjects[i].gameObject.name.Contains("TUNIT") && nearbyObjects[i] != GetComponent<Collider>())
             {
-                if (nearbyObjects[i].gameObject.name.Contains("TUNIT") && nearbyObjects[i] != GetComponent<Collider>())
-                {
-                    avgNeighborPos += nearbyObjects[i].transform.position;
+                avgNeighborPos += nearbyObjects[i].transform.position;
 
-                    NearbyUnits++;
+                NearbyUnits++;
 
-                    avgNeighborDir += nearbyObjects[i].transform.forward;
+                avgNeighborDir += nearbyObjects[i].transform.forward;
 
-                    Vector3 offset = nearbyObjects[i].transform.position - transform.position;
-                    moveDir += (offset / -offset.sqrMagnitude) * seperationW;
-
-                }
+                Vector3 offset = nearbyObjects[i].transform.position - transform.position;
+                moveDir += (offset / -offset.sqrMagnitude) * seperationW;
 
             }
 
-            if (NearbyUnits > 0)
-            {
-                avgNeighborPos /= NearbyUnits;
-                avgNeighborDir /= NearbyUnits;
+        }
 
-                moveDir += (avgNeighborPos - transform.position).normalized * cohesionW;
-                moveDir += avgNeighborDir.normalized * alignmentW;
+        if (NearbyUnits > 0)
+        {
+            avgNeighborPos /= NearbyUnits;
+            avgNeighborDir /= NearbyUnits;
+
+            moveDir += (avgNeighborPos - transform.position).normalized * cohesionW;
+            moveDir += avgNeighborDir.normalized * alignmentW;
+        }
+
+        RaycastHit hInfo;
+
+        if (Physics.SphereCast(new Ray(transform.position + moveDir.normalized * 1.6f, moveDir), 1f, out hInfo, 3))
+        {
+            if (hInfo.transform.gameObject.name.Contains("Obstacle"))
+            {
+                Vector3 vectorToCenterOfObstacle = hInfo.transform.position - transform.position;
+                moveDir -= Vector3.Project(vectorToCenterOfObstacle, transform.right).normalized * (1f / vectorToCenterOfObstacle.magnitude) * avoidanceW;
             }
 
-            RaycastHit hInfo;
-
-            if (Physics.SphereCast(new Ray(transform.position + moveDir.normalized * 1.6f, moveDir), 1f, out hInfo, 3))
-            {
-                if (hInfo.transform.gameObject.name.Contains("Obstacle"))
-                {
-                    Vector3 vectorToCenterOfObstacle = hInfo.transform.position - transform.position;
-                    moveDir -= Vector3.Project(vectorToCenterOfObstacle, transform.right).normalized * (1f / vectorToCenterOfObstacle.magnitude) * avoidanceW;
-                }
-
-            }
+        }
 
 
         if (t == null)
@@ -84,16 +86,16 @@ public class Steering : MonoBehaviour {
 
         moveDir = moveDir.normalized * moveSpeed;
 
-            transform.position += moveDir * Time.fixedDeltaTime;
+        transform.position += moveDir * Time.fixedDeltaTime;
 
-            //if (moveDir != Vector3.zero)
-            //{
-            //    transform.forward = moveDir;
-            //}
+        //if (moveDir != Vector3.zero)
+        //{
+        //    transform.forward = moveDir;
+        //}
 
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
-	}
+    }
 
     void OnTriggerEnter(Collider col)
     {
@@ -101,16 +103,16 @@ public class Steering : MonoBehaviour {
         {
             t = null;
 
-           
+
         }
 
     }
 
-    private void AcquireTarget()
+    public void AcquireTarget()
     {
 
 
-        if (GameObject.FindGameObjectWithTag("marker"))
+        if (GameObject.FindGameObjectWithTag("marker") && this.gameObject.GetComponent<Unit>().isSelected == true)
         {
             t = GameObject.FindGameObjectWithTag("marker").transform;
         }

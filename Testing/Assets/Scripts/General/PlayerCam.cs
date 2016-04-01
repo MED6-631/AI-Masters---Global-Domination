@@ -43,23 +43,38 @@
 
         private void KeyMovement()
         {
+            bool isShift = false;
+
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                isShift = true;
+            }
+
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
+                if (isShift)
+                    MoveCam(Vector3.forward * 3);
                 MoveCam(Vector3.forward);
             }
 
             if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
             {
+                if (isShift)
+                    MoveCam(Vector3.back * 3);
                 MoveCam(Vector3.back);
             }
 
             if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
             {
+                if (isShift)
+                    MoveCam(Vector3.left * 3);
                 MoveCam(Vector3.left);
             }
 
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
             {
+                if (isShift)
+                    MoveCam(Vector3.right * 3);
                 MoveCam(Vector3.right);
             }
 
@@ -68,46 +83,37 @@
         private void PlaceMarker()
         {
             bool pressed = false;
-            
+
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
-                var playerPlane = new Plane(Vector3.up, new Vector3(0,0,0));
+                var playerPlane = new Plane(Vector3.up, new Vector3(0, 0, 0));
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
 
-                //print(ray);
                 if (playerPlane.Raycast(ray, out hitdist))
                 {
-                    //var targetPoint = ray.GetPoint(hitdist);
                     targetPos = ray.GetPoint(hitdist);
-                    //print(ray.GetPoint(hitdist));
-                    //var targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                    //transform.rotation = targetRotation;
 
                 }
 
-                if(spawned == true)
+                if (spawned == true)
                 {
                     GameObject.FindGameObjectWithTag("marker").GetComponent<MarkerTest>().TurnSelfInvisible(false);
                 }
-                   
 
-
-                //nextMarkerNumber+= 1;
-                if(spawned == false)
+                if (spawned == false)
                 {
                     pressed = true;
                 }
-                
-                
+
+
             }
+
             Vector3 location;
             location = new Vector3(targetPos.x, 0.5f, targetPos.z);
-            //print(location);
-           
-            if(pressed == true && spawned == false)
+
+            if (pressed == true && spawned == false)
             {
-                //marker.name = "Marker " + nextMarkerNumber+" ";
                 markerClone = Instantiate(marker, location, Quaternion.identity) as GameObject;
 
                 spawned = true;
@@ -117,19 +123,6 @@
             {
                 markerClone.transform.position = location;
             }
-           
-
-            //if(m.active == false && Input.GetKey(KeyCode.Mouse1)) 
-            //{
-            //    m.SetActive(true);
-            //    for (int i = 0; i < GameObject.FindGameObjectsWithTag("unit").Length; i++)
-            //    {
-            //        GameObject.Find("TUNIT ("+i+")").GetComponent<Steering>().t = m.transform;
-
-            //    }
-
-            //}
-
 
         }
 
@@ -138,7 +131,7 @@
 
             var mousePos = Input.mousePosition;
 
-            if((mousePos.x < 0f ||mousePos.x > Screen.width) || (mousePos.y < 0f || mousePos.y > Screen.width)) 
+            if ((mousePos.x < 0f || mousePos.x > Screen.width) || (mousePos.y < 0f || mousePos.y > Screen.width))
             {
                 return;
 
