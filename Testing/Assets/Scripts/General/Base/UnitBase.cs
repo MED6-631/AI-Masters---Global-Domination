@@ -9,7 +9,7 @@ namespace AI.Master
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Collider))]
 
-    public abstract class UnitBase : MonoBehaviour
+    public abstract class UnitBase : MonoBehaviour, ICanDie
     {
 
         private const float destinationBufferRadius = 2f;
@@ -45,12 +45,12 @@ namespace AI.Master
         [SerializeField]
         private float _unitRadius = 0.6f;
 
-        private float _lastAttack;
+        protected float _lastAttack;
         protected List<GameObject> _obs;
         private NavMeshAgent _navMeshAgent;
 
 
-        //public abstract UnitType type { get; }
+        public abstract UnitType type { get; }
 
 
         public int id
@@ -82,6 +82,12 @@ namespace AI.Master
         public float viewRadius
         {
             get { return _viewRadius; }
+        }
+
+        public MainBaseStructure mainBase
+        {
+            get;
+            set;
         }
 
         public List<GameObject> obs
@@ -127,6 +133,10 @@ namespace AI.Master
 
         private void OnDisable()
         {
+            if(this.mainBase != null)
+            {
+                this.mainBase.ReturnUnit(this);
+            }
           
         }
 
@@ -166,10 +176,15 @@ namespace AI.Master
             this.transform.LookAt(new Vector3(pos.x, this.transform.position.y, pos.z));
         }
 
-        //public bool IsAllied(UnitBase otherUnit)
-        //{
-            
-        //}
+        public bool IsAllied(UnitBase otherUnit)
+        {
+            return ReferenceEquals(this.mainBase, otherUnit.mainBase);
+        }
+
+        public bool IsAllied(MainBaseStructure mainBase)
+        {
+            return ReferenceEquals(this.mainBase, mainBase);
+        }
 
         public virtual void RandomWander()
         {
