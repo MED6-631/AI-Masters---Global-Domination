@@ -16,9 +16,12 @@
         public Vector2 constrictY = new Vector2(10f, 60f);
 
         private Vector3 targetPos;
-        //private int nextMarkerNumber = 0;
+
         bool spawned = false;
         public GameObject markerClone;
+        public Transform player;
+        public Transform companionAI;
+        private float y;
 
         private void FixedUpdate()
         {
@@ -26,6 +29,7 @@
             MoveOnEdge();
             ScrollZoom();
             PlaceMarker();
+            CenterOn();
         }
 
         private void ScrollZoom()
@@ -36,7 +40,7 @@
                 return;
             }
 
-            var y = Mathf.Clamp(this.transform.position.y + (-Mathf.Sign(scroll) * scrollSpeed), this.constrictY.x, this.constrictY.y);
+            y = Mathf.Clamp(this.transform.position.y + (-Mathf.Sign(scroll) * scrollSpeed), this.constrictY.x, this.constrictY.y);
             this.transform.position = new Vector3(this.transform.position.x, y, this.transform.position.z);
 
         }
@@ -162,6 +166,19 @@
         private void MoveCam(Vector3 dir)
         {
             this.transform.position += dir.normalized * this.moveSpeed * Time.fixedDeltaTime;
+        }
+
+        private void CenterOn()
+        {
+            if(Input.GetKey(KeyCode.F1))
+            {
+                this.transform.position = new Vector3(player.position.x, y, player.position.z);
+            }
+
+            if(Input.GetKey(KeyCode.F2))
+            {
+                this.transform.position = new Vector3(companionAI.position.x, y, companionAI.position.z);
+            }
         }
 
     }

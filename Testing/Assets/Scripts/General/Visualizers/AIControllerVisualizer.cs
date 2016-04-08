@@ -32,8 +32,8 @@
                 "\nMainBase HP: ", mainBase.currentHealth.ToString("F0"), " / ", mainBase.maxHealth.ToString("F0"),
                 "\nTotal Units: ", mainBase.units.Count.ToString(),
                 "\nMiners: ", mainBase.minerCount,
-                "\nSoldiers: ", mainBase.soldierCount,
-                "\nDemolishers: ", mainBase.demolisherCount);
+                "\nSoldiers: ", mainBase.soldierCount
+                /*"\nDemolishers: ", mainBase.demolisherCount*/);
 
             Rect rect;
             if (_leftAlign)

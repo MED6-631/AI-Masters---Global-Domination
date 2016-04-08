@@ -6,7 +6,9 @@
         Miner,
         Soldier,
         Demolisher,
-        Archer
+        Archer,
+        Champion,
+        Boss
 
 
     }

@@ -44,7 +44,7 @@
 
             for (int i = 0; i < nearbyObjects.Length; i++)
             {
-                if (nearbyObjects[i].gameObject.name.Contains("TUNIT") && nearbyObjects[i] != GetComponent<Collider>())
+                if (nearbyObjects[i].gameObject.name.Contains("CompanionAI") && nearbyObjects[i] != GetComponent<Collider>())
                 {
                     avgNeighborPos += nearbyObjects[i].transform.position;
 
@@ -72,7 +72,7 @@
 
             if (Physics.SphereCast(new Ray(transform.position + moveDir.normalized * 1.6f, moveDir), 1f, out hInfo, 3))
             {
-                if (hInfo.transform.gameObject.name.Contains("Obstacle"))
+                if (hInfo.transform.gameObject.layer.Equals("Obstacles"))
                 {
                     Vector3 vectorToCenterOfObstacle = hInfo.transform.position - transform.position;
                     moveDir -= Vector3.Project(vectorToCenterOfObstacle, transform.right).normalized * (1f / vectorToCenterOfObstacle.magnitude) * avoidanceW;
@@ -114,7 +114,7 @@
         {
 
 
-            if (GameObject.FindGameObjectWithTag("marker") && this.gameObject.GetComponent<Unit>().isSelected == true)
+            if (GameObject.FindGameObjectWithTag("marker"))
             {
                 t = GameObject.FindGameObjectWithTag("marker").transform;
             }

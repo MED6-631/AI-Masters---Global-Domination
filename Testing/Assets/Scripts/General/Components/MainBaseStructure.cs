@@ -21,8 +21,8 @@
         [SerializeField]
         private int _startSoldiers = 0;
 
-        [SerializeField]
-        private int _startDemolishers = 0;
+        //[SerializeField]
+        //private int _startDemolishers = 0;
 
         [SerializeField]
         private int _initialInstanceCount = 30;
@@ -33,8 +33,8 @@
         [SerializeField]
         private GameObject _soldierPrefab;
 
-        [SerializeField]
-        private GameObject _demolisherPrefab;
+        //[SerializeField]
+        //private GameObject _demolisherPrefab;
 
         [SerializeField]
         private int _currentResources;
@@ -80,10 +80,10 @@
             get { return _entityPools[UnitType.Soldier].count; }
         }
 
-        public int demolisherCount
-        {
-            get { return _entityPools[UnitType.Demolisher].count; }
-        }
+        //public int demolisherCount
+        //{
+        //    get { return _entityPools[UnitType.Demolisher].count; }
+        //}
 
         public int currentResources
         {
@@ -103,8 +103,8 @@
             _entityPools = new Dictionary<UnitType, UnitPool>(new UnitTypeComparer())
             {
                 {UnitType.Miner, new UnitPool(_minerPrefab, this.gameObject, _initialInstanceCount) },
-                {UnitType.Soldier, new UnitPool(_soldierPrefab, this.gameObject, _initialInstanceCount) },
-                {UnitType.Demolisher, new UnitPool(_demolisherPrefab, this.gameObject, _initialInstanceCount) }
+                {UnitType.Soldier, new UnitPool(_soldierPrefab, this.gameObject, _initialInstanceCount) }
+                //{UnitType.Demolisher, new UnitPool(_demolisherPrefab, this.gameObject, _initialInstanceCount) }
             };
 
             _units = new List<UnitBase>(_initialInstanceCount);
@@ -144,11 +144,11 @@
                 StartCoroutine(BuildUnitsGradually(_startSoldiers, UnitType.Soldier));
             }
 
-            if(_startDemolishers > 0)
-            {
-                yield return new WaitForSeconds(1f);
-                StartCoroutine(BuildUnitsGradually(_startDemolishers, UnitType.Demolisher));
-            }
+            //if(_startDemolishers > 0)
+            //{
+            //    yield return new WaitForSeconds(1f);
+            //    StartCoroutine(BuildUnitsGradually(_startDemolishers, UnitType.Demolisher));
+            //}
         }
 
         private IEnumerator BuildUnitsGradually (int count, UnitType type)
