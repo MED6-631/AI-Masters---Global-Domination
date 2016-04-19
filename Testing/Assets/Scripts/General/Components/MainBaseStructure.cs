@@ -6,6 +6,11 @@
 
     public class MainBaseStructure : MonoBehaviour, ICanDie
     {
+
+        private const int maxUnitsReturning = 9;
+
+        public float returnGatherRadius = 9f;
+
         [SerializeField]
         private float _maxHealth = 1000f;
 
@@ -16,7 +21,7 @@
         private float _buildCooldown = 0.5f;
 
         [SerializeField]
-        private int _startMiners = 5;
+        private int _startMiners = 0;
 
         [SerializeField]
         private int _startSoldiers = 0;
@@ -45,6 +50,8 @@
         private Dictionary<UnitType, UnitPool> _entityPools;
         private List<UnitBase> _units;
         private float _lastBuild;
+
+        private readonly Vector3[] _returnPositions = new Vector3[maxUnitsReturning];
 
         public AIController controller
         {
@@ -96,6 +103,12 @@
             get { return _units; }
         }
 
+        public MainBaseStructure enemyBase
+        {
+            get;
+            private set;
+        }
+
         private int _lastSpawnIndex;
 
         private void Awake()
@@ -108,12 +121,30 @@
             };
 
             _units = new List<UnitBase>(_initialInstanceCount);
+
+            var bases = FindObjectsOfType<MainBaseStructure>();
+            for (int i = 0; i < bases.Length; i++)
+            {
+                if(ReferenceEquals(bases[i], this))
+                {
+                    continue;
+                }
+
+                this.enemyBase = bases[i];
+                break;
+            }
         }
 
         private void OnEnable()
         {
             this.currentHealth = _maxHealth;
             StartCoroutine(BuildInitialUnits());
+
+            var angle = 360f / maxUnitsReturning;
+            for (int i = 0; i < maxUnitsReturning; i++)
+            {
+                _returnPositions[i] = CircleHelpers.GetPointOnCircle(this.transform.position, returnGatherRadius / 2f, angle, i);
+            }
         }
 
         private void OnDisable()
@@ -121,22 +152,20 @@
             var count = _units.Count;
             for (int i = 0; i < count; i++)
             {
-                if(_units[i].currentHealth > 0f)
-                {
-                    _units[i].ReceiveDamage(_units[i].maxHealth + 1f);
-                }
 
                 ReturnUnit(_units[i]);
             }
+
+            Grid.instance.UpdateCellsBlockedStatus(this.GetComponent<Collider>());
         }
 
         private IEnumerator BuildInitialUnits()
         {
-            if(_startMiners > 0)
-            {
-                yield return new WaitForSeconds(1f);
-                StartCoroutine(BuildUnitsGradually(_startMiners, UnitType.Miner));
-            }
+            //if(_startMiners > 0)
+            //{
+            //    yield return new WaitForSeconds(1f);
+            //    StartCoroutine(BuildUnitsGradually(_startMiners, UnitType.Miner));
+            //}
 
             if(_startSoldiers > 0)
             {
@@ -188,7 +217,8 @@
 
         private void InternalBuildUnit(UnitType type)
         {
-            var unit = _entityPools[type].Get(GetPointOnCircle(), Quaternion.identity);
+            var pos = CircleHelpers.GetPointOnCircle(this.transform.position, _spawnDistance, _anglePerSpawn, _lastSpawnIndex++);
+            var unit = _entityPools[type].Get(pos, Quaternion.identity);
             unit.mainBase = this;
 
             var color = this.controller.color;
@@ -207,12 +237,7 @@
             _units.Add(unit);
         }
 
-        private Vector3 GetPointOnCircle()
-        {
-            var max = 360f / _anglePerSpawn;
-            var ang = (_lastSpawnIndex++ % max) * _anglePerSpawn;
-            return new Vector3(this.transform.position.x + _spawnDistance * Mathf.Sin(ang * Mathf.Deg2Rad), this.transform.position.y, this.transform.position.z + _spawnDistance * Mathf.Cos(ang * Mathf.Deg2Rad));
-        }
+
 
 
         public void ReturnUnit(UnitBase unit)
@@ -234,6 +259,22 @@
             {
                 this.gameObject.SetActive(false);
             }
+        }
+
+        public Vector3 GetReturningPosition(UnitBase unit)
+        {
+            var unitPos = unit.transform.position;
+            var nearest = _returnPositions[0];
+            for (int i = 1; i < _returnPositions.Length; i++)
+            {
+                var pos = _returnPositions[i];
+                if((unitPos - pos).sqrMagnitude < (unitPos - nearest).sqrMagnitude)
+                {
+                    nearest = pos;
+                }
+            }
+
+            return nearest;
         }
 
     }

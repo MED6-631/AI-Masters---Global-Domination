@@ -31,7 +31,7 @@
                 "Resources: ", mainBase.currentResources.ToString(),
                 "\nMainBase HP: ", mainBase.currentHealth.ToString("F0"), " / ", mainBase.maxHealth.ToString("F0"),
                 "\nTotal Units: ", mainBase.units.Count.ToString(),
-                "\nMiners: ", mainBase.minerCount,
+                /*"\nMiners: ", mainBase.minerCount,*/
                 "\nSoldiers: ", mainBase.soldierCount
                 /*"\nDemolishers: ", mainBase.demolisherCount*/);
 

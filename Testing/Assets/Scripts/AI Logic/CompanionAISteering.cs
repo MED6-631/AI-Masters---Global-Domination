@@ -16,8 +16,14 @@
         public float alignmentW = 0.0001f;
         public float pursuitW = 0.001f;
 
+        public bool ReturnToPlayer = false;
+
         public Vector3 moveDir = Vector3.zero;
 
+        void Start()
+        {
+            t = GameObject.FindGameObjectWithTag("Player").transform;
+        }
 
         void FixedUpdate()
         {
@@ -73,7 +79,7 @@
 
             if (Physics.SphereCast(new Ray(transform.position + moveDir.normalized * 1.6f, moveDir), 1f, out hInfo, 3))
             {
-                if (hInfo.transform.gameObject.tag.Contains("obstacle") || hInfo.transform.gameObject.tag.Contains("resource"))
+                if (hInfo.transform.gameObject.tag.Contains("obstacle"))
                 {
                     Vector3 vectorToCenterOfObstacle = hInfo.transform.position - transform.position;
                     moveDir -= Vector3.Project(vectorToCenterOfObstacle, transform.right).normalized * (1f / vectorToCenterOfObstacle.magnitude) * avoidanceW;
@@ -104,15 +110,22 @@
         public void AcquireTarget()
         {
 
+            if(GameObject.FindGameObjectWithTag("marker") != null)
+            {
+                if (ReturnToPlayer == true)
+                {
+                    t = GameObject.FindGameObjectWithTag("Player").transform;
+                }
+                else if (GameObject.FindGameObjectWithTag("marker") && ReturnToPlayer == false)
+                {
+                    t = GameObject.FindGameObjectWithTag("marker").transform;
+                }
+                else
+                {
+                    t = null;
+                }
+            }
 
-            if (GameObject.FindGameObjectWithTag("Player"))
-            {
-                t = GameObject.FindGameObjectWithTag("Player").transform;
-            }
-            else
-            {
-                t = null;
-            }
 
         }
 

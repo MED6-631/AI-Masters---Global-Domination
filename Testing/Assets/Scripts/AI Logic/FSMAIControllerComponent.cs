@@ -17,10 +17,10 @@ namespace AI.Master
                 return;
             }
 
-            if(mainBase.minerCount < desiredMinerCount)
-            {
-                mainBase.SpawnUnit(UnitType.Miner);
-            }
+            //if(mainBase.minerCount < desiredMinerCount)
+            //{
+            //    mainBase.SpawnUnit(UnitType.Miner);
+            //}
             else if(mainBase.soldierCount <= desiredSoldierCount)
             {
                 mainBase.SpawnUnit(UnitType.Soldier);

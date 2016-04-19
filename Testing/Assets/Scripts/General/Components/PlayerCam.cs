@@ -25,7 +25,7 @@
 
         private void FixedUpdate()
         {
-            KeyMovement();
+            //KeyMovement();
             MoveOnEdge();
             ScrollZoom();
             PlaceMarker();
@@ -45,44 +45,44 @@
 
         }
 
-        private void KeyMovement()
-        {
-            bool isShift = false;
+        //private void KeyMovement()
+        //{
+        //    bool isShift = false;
 
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-            {
-                isShift = true;
-            }
+        //    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        //    {
+        //        isShift = true;
+        //    }
 
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-            {
-                if (isShift)
-                    MoveCam(Vector3.forward * 3);
-                MoveCam(Vector3.forward);
-            }
+        //    if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        //    {
+        //        if (isShift)
+        //            MoveCam(Vector3.forward * 3);
+        //        MoveCam(Vector3.forward);
+        //    }
 
-            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-            {
-                if (isShift)
-                    MoveCam(Vector3.back * 3);
-                MoveCam(Vector3.back);
-            }
+        //    if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        //    {
+        //        if (isShift)
+        //            MoveCam(Vector3.back * 3);
+        //        MoveCam(Vector3.back);
+        //    }
 
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-            {
-                if (isShift)
-                    MoveCam(Vector3.left * 3);
-                MoveCam(Vector3.left);
-            }
+        //    if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        //    {
+        //        if (isShift)
+        //            MoveCam(Vector3.left * 3);
+        //        MoveCam(Vector3.left);
+        //    }
 
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-            {
-                if (isShift)
-                    MoveCam(Vector3.right * 3);
-                MoveCam(Vector3.right);
-            }
+        //    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        //    {
+        //        if (isShift)
+        //            MoveCam(Vector3.right * 3);
+        //        MoveCam(Vector3.right);
+        //    }
 
-        }
+        //}
 
         private void PlaceMarker()
         {
@@ -110,7 +110,7 @@
                     pressed = true;
                 }
 
-
+                GameObject.FindGameObjectWithTag("companion").GetComponent<CompanionAISteering>().ReturnToPlayer = false;
             }
 
             Vector3 location;
@@ -170,12 +170,11 @@
 
         private void CenterOn()
         {
-            if(Input.GetKey(KeyCode.F1))
-            {
+         
                 this.transform.position = new Vector3(player.position.x, y, player.position.z);
-            }
+            
 
-            if(Input.GetKey(KeyCode.F2))
+            if(Input.GetKey(KeyCode.F1))
             {
                 this.transform.position = new Vector3(companionAI.position.x, y, companionAI.position.z);
             }
