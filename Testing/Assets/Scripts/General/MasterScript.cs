@@ -16,11 +16,13 @@
         public bool isCompanionDead = false;
         public bool tutorial;
         public int LevelCheck;
+        public bool pressed = false;
         //public int currentWave;
         public bool startWave = false;
         public float playerHP;
         public float companionHP;
         private WaveMaster wM;
+        private Vector3 pC;
 
 
         void Start()
@@ -112,10 +114,38 @@
                 GUI.Label(new Rect(Screen.width / 3, Screen.height / 20, Screen.width / 8, Screen.height / 8), "S : " + Mathf.RoundToInt(sec), myFont);
                 GUI.Label(new Rect(Screen.width / 20, Screen.height / 10, Screen.width/8, Screen.height/8), "Player Health: " + Mathf.RoundToInt(playerHP) + " \n \nCompanion Health: " + Mathf.RoundToInt(companionHP), myFont);
 
+                if(Input.GetKey(KeyCode.Mouse2))
+                {
+                    
+                    Rect guiRect = new Rect(Screen.width/2-200, Screen.height/2-50, 100, 100);
+
+                    GUILayout.BeginArea(guiRect, "CompanionAI Commands", myFont);
+                    GUILayout.Space(30);
+
+                    if (GUILayout.Button("Aggressive"))
+                    {
+                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().t = null;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().RandomWander();
+                    }
+
+                    if (GUILayout.Button("Defensive"))
+                    {
+                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = true;
+                    }
+
+                    GUILayout.EndArea();
+
+
+
+
+                }
+
                     if (wM.waveLevel == 0)
                     {
                         myFont.fontSize = 64;
-                        if (GUI.Button(new Rect(Screen.width / 2, Screen.height / 2, Screen.width / 4, Screen.height / 4), "Start Wave", myFont))
+                        if (GUI.Button(new Rect(Screen.width / 2-150, Screen.height / 2-50, Screen.width / 4, Screen.height / 4), "Start Wave", myFont))
                         {
                         startWave = true;
 
@@ -133,14 +163,15 @@
                 }
                 if(tutorial)
                 {
-                    GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, Screen.width / 20, Screen.height / 20), "Controls: \n W = Up, S = Down, A = Left, D = Right\n Space = shoot, Right Mousebutton = Companion Commands \n Left-Drag Mousebutton = Selection of an Area", myFont);
+                    GUI.Label(new Rect(Screen.width / 2 -200, Screen.height / 8, Screen.width / 20, Screen.height / 20), "Controls: \nW = Up, S = Down, A = Left, D = Right, Q = Recall Companion\nSpace = shoot, Right Mousebutton = Move Companion to location \nHold Middle Mousebutton to show AI Behavior Menu \nThe Emoticons can be used to communicate \nwith the Companion AI who knows may do something\n", myFont);
                 }
                 else if(!tutorial)
                 {
-                    myFont.fontSize = 64;
-                    if(GUI.Button(new Rect(Screen.width/2.5f, Screen.height/2, 400, 60), "Survive!", myFont))
+                    myFont.fontSize = 128;
+                    if(GUI.Button(new Rect(Screen.width/2 - 200, Screen.height/2-100, 400, 200), "Survive!", myFont))
                     {
                         Application.LoadLevel("Level01");
+                        
                        
                     }
                 }
@@ -153,6 +184,15 @@
                 myFont.fontSize = 18;
                 GUI.Label(new Rect(25, 25, 100, 30), "Total Time: \n Hours: " + hour + " Minutes: " + min + " Seconds: " + sec, myFont);
                 myFont.fontSize = 24;
+                if(isPlayerDead)
+                {
+                    GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 100, 100, 30), "Player Died", myFont);
+                }
+                else if(isCompanionDead)
+                {
+                    GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 + 100, 100, 30), "Companion Died", myFont);
+                }
+               
                 if (GUI.Button(new Rect(Screen.width / 2.5f, Screen.height / 1.25f, 100, 30), "Return to Main Menu", myFont))
                 {
                     Application.LoadLevel("Menu");

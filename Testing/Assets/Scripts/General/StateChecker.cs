@@ -24,7 +24,7 @@
         void FixedUpdate()
         {
 
-
+            
             master.GetComponent<MasterScript>().playerHP = player.GetComponent<PlayerController>().currentHealth;
             master.GetComponent<MasterScript>().companionHP = companion.GetComponent<PathCompanionUnit>().currentHealth;
 
@@ -33,7 +33,7 @@
                 master.GetComponent<MasterScript>().isPlayerDead = true;
             }
 
-            if(companion.GetComponent<PathCompanionUnit>().isDead == true)
+            if(companion.GetComponent<PathCompanionUnit>().currentHealth <= 100)
             {
                 master.GetComponent<MasterScript>().isCompanionDead = true;
             }

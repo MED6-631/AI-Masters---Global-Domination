@@ -103,7 +103,11 @@
             enemySoldierAmount += Mathf.RoundToInt(difficultyMultiplier/2);
             enemyEliteAmount += Mathf.RoundToInt(difficultyMultiplier / 4);
             enemyBossAmount += Mathf.RoundToInt(difficultyMultiplier / 6);
-        }
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().HealDamage(100);
+            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().HealDamage(500);
+
+         }
 
         void startNewWave()
         {

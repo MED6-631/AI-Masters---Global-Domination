@@ -72,6 +72,12 @@ namespace AI.Master
             get { return _currentHealth; }
         }
 
+        public float heal
+        {
+            get;
+            set;
+        }
+
         public bool isDead
         {
             get { return _currentHealth <= 0f || !this.gameObject.activeSelf; }
@@ -232,6 +238,16 @@ namespace AI.Master
                 this.gameObject.SetActive(false);
             }
 
+        }
+
+        public void HealDamage(float hp)
+        {
+            _currentHealth += hp;
+
+            if(_currentHealth > maxHealth)
+            {
+                _currentHealth = maxHealth;
+            }
         }
 
         protected void PlayEffect(ParticleSystem effect)

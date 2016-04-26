@@ -10,7 +10,9 @@
 
         public bool ReturnToPlayer = false;
 
+        public bool resetPath = false;
         public Transform t;
+        public Transform playerReference;
 
 
         void Start()
@@ -21,11 +23,23 @@
         void FixedUpdate()
         {
             AcquireTarget();
-            if(isMoving == false)
+            if(isMoving == false && ReturnToPlayer == false)
             {
                 AcquiredTarget(t.position);
             }
 
+            if(isMoving == false && ReturnToPlayer == true)
+            {
+                AcquiredTarget(playerReference.position);
+            }
+
+            if(resetPath)
+            {
+                StopMoving();
+                resetPath = false;
+            }
+
+            playerReference = GameObject.FindGameObjectWithTag("Player").transform;
             
         }
 
@@ -35,6 +49,13 @@
             {
                 return _steerForPath.path != null;
             }
+        }
+
+        public override void RandomWander()
+        {
+            var randomPos = this.transform.position + Random.onUnitSphere.normalized * _randomWanderRadius;
+            randomPos.y = this.transform.position.y;
+            MoveTo(randomPos);
         }
 
         public override void MoveTo(Vector3 destination)
@@ -57,16 +78,25 @@
 
         public void AcquireTarget()
         {
-            if (ReturnToPlayer == true)
-            {
-                t = GameObject.FindGameObjectWithTag("Player").transform;
-            }
+            //if (ReturnToPlayer == true)
+            //{
+            //    if(isMoving == true && resetPath == false && Input.GetMouseButtonDown(1))
+            //    {
+            //        resetPath = true;
+            //    }
+
+            //    t = playerReference;
+            //}
 
             if (GameObject.FindGameObjectWithTag("marker") != null)
             {
 
                 if (GameObject.FindGameObjectWithTag("marker") && ReturnToPlayer == false)
                 {
+                    if (isMoving == true && resetPath == false && Input.GetMouseButtonDown(1))
+                    {
+                        resetPath = true;
+                    }
                     t = GameObject.FindGameObjectWithTag("marker").transform;
                 }
                 else

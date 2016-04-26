@@ -15,7 +15,7 @@
         public GameObject marker;
         public Vector2 constrictY = new Vector2(10f, 60f);
 
-        private Vector3 targetPos;
+        public Vector3 targetPos;
 
         bool spawned = false;
         public GameObject markerClone;
@@ -87,9 +87,10 @@
         private void PlaceMarker()
         {
             bool pressed = false;
-
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            
+            if (Input.GetKey(KeyCode.Mouse1))
             {
+               
                 var playerPlane = new Plane(Vector3.up, new Vector3(0, 0, 0));
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
