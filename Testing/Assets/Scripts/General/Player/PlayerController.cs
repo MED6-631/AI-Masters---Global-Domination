@@ -2,8 +2,10 @@
 {
     using UnityEngine;
     using System.Collections;
+    using Apex.AI;
+    using System;
 
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : UnitBase
     {
 
         public float speed = 5.0f;
@@ -11,18 +13,28 @@
         public float gravity = 20.0f;
         public float maxVelocityChange = 10.0f;
         private float fastSpeed;
-
+        //private EmoticonCommunicationSystem ECS;
         private Vector3 moveDirection = Vector3.zero;
         public Rigidbody rigC;
         public GameObject bullet;
         public Transform point;
+        private GameObject master;
         private float shootTime = 0;
+        public override UnitType type
+        {
+            get { return UnitType.Player; }
+        }
+
+
 
         void Start()
         {
             rigC = GetComponent<Rigidbody>();
             rigC.useGravity = false;
             fastSpeed = speed + speed;
+            master = GameObject.FindGameObjectWithTag("master");
+            //ECS = GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>();
+
         }
 
         void FixedUpdate()
@@ -80,7 +92,9 @@
 
             if(Input.GetKey(KeyCode.Q))
             {
-                GameObject.FindGameObjectWithTag("companion").GetComponent<CompanionAISteering>().ReturnToPlayer = true;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = true;
+                //GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().AcquiredTarget(this.transform.position);
+
             }
 
 
@@ -100,9 +114,21 @@
                 }
             }
 
+            if(this.currentHealth <= 0 && master != null)
+            {
+                GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().isPlayerDead = true;
+            }
+            else if (this.currentHealth >= 0 && master != null)
+            {
+                GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().isPlayerDead = false;
+            }
+
         }
 
-
+        protected override void InternalAttack(float dmg)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

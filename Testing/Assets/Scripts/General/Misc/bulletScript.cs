@@ -8,6 +8,7 @@
 
         public float lifeTime = 1;
         public float bulletSpeed;
+        public float bulletDMG;
 
         void FixedUpdate()
         {
@@ -24,10 +25,21 @@
 
         void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.tag == "unit" || other.gameObject.tag == "obstacle" || other.gameObject.tag == "structure")
+            if (other.gameObject.tag == "unit" || other.gameObject.tag == "companion")
+            {
+                if(other.gameObject.GetComponent<UnitBase>().teamID != 2)
+                {
+                    other.gameObject.GetComponent<UnitBase>().ReceiveDamage(bulletDMG);
+                }
+                
+
+                GameObject.Destroy(this.gameObject);
+            }
+            else if (other.gameObject.tag == "obstacle" ||other.gameObject.tag == "structure")
             {
                 GameObject.Destroy(this.gameObject);
             }
+
         }
     }
 

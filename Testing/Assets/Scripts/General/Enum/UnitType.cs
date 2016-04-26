@@ -8,7 +8,9 @@
         Demolisher,
         Archer,
         Champion,
-        Boss
+        Boss,
+        Player,
+        Companion
 
 
     }

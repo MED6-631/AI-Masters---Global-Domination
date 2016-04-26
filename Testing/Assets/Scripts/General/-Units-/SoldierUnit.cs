@@ -3,12 +3,15 @@
     using System;
     using UnityEngine;
 
+
+
     public class SoldierUnit : UnitBase
     {
         public override UnitType type
         {
             get { return UnitType.Soldier; }
         }
+
 
         protected override void InternalAttack(float dmg)
         {
@@ -22,7 +25,7 @@
                 }
 
                 var unit = hit.GetComponent<UnitBase>();
-                if(unit != null)
+                if(unit != null && unit.teamID != 1)
                 {
                     this.LookAt(unit.transform.position);
                     unit.ReceiveDamage(dmg);

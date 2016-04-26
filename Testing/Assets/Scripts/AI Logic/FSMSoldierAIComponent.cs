@@ -69,6 +69,12 @@
                     if(_entity.IsAllied(otherUnit))
                     {
                         continue;
+                        
+                    }
+
+                    if(otherUnit.teamID == this.gameObject.GetComponent<UnitBase>().teamID)
+                    {
+                        continue;
                     }
 
                     _attackTarget = otherUnit;

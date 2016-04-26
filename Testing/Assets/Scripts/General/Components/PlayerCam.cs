@@ -100,9 +100,9 @@
 
                 }
 
-                if (spawned == true)
+                if (spawned == true && marker != null)
                 {
-                    GameObject.FindGameObjectWithTag("marker").GetComponent<MarkerTest>().TurnSelfInvisible(false);
+                    GameObject.FindGameObjectWithTag("marker").GetComponent<MarkerTest>().Trigger = true;
                 }
 
                 if (spawned == false)
@@ -110,7 +110,11 @@
                     pressed = true;
                 }
 
-                GameObject.FindGameObjectWithTag("companion").GetComponent<CompanionAISteering>().ReturnToPlayer = false;
+                if(marker != null)
+                {
+                    GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
+                }
+               
             }
 
             Vector3 location;

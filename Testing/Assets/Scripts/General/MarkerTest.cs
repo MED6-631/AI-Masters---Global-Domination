@@ -6,39 +6,59 @@
     public class MarkerTest : MonoBehaviour
     {
 
-        public float time;
-        private float counter;
+        public AnimationClip clip;
+        public Animation anim;
+        public bool pressed = false;
+        public bool Trigger
+        {
+            get { return pressed; }
+            set { pressed = value; }
+        }
+
+        public GameObject[] childrenGO;
+
+
+
 
 
         void Start()
         {
-            counter = time;
+            StartCoroutine("CoStart");
+           
+            anim = GetComponent<Animation>();
+
         }
 
-        void FixedUpdate()
+
+        IEnumerator CoStart()
         {
-            if (gameObject.GetComponent<Renderer>().enabled == true)
-            {
-                TurnSelfInvisible(true);
-            }
-
+            while (true)
+                yield return StartCoroutine("CoUpdate");
         }
 
-        public void TurnSelfInvisible(bool invisible)
+        IEnumerator CoUpdate()
         {
-
-            counter -= Time.fixedDeltaTime;
-            if (invisible && counter <= 0)
+            if(pressed)
             {
-                gameObject.GetComponent<Renderer>().enabled = false;
+                for (int i = 0; i < childrenGO.Length; i++)
+                {
+                    childrenGO[i].SetActive(true);
+                }
+                anim.CrossFade(clip.name);
+                yield return new WaitForSeconds(anim.GetClip(clip.name).length);
+                for (int i = 0; i < childrenGO.Length; i++)
+                {
+                    childrenGO[i].SetActive(false);
+                }
+                pressed = false;
+
+                
             }
 
-            if (invisible == false)
-            {
-                gameObject.GetComponent<Renderer>().enabled = true;
-                counter = time;
-            }
+            
+            yield return null;
         }
+
     }
 }
 

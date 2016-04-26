@@ -45,6 +45,9 @@ namespace AI.Master
         [SerializeField]
         private float _unitRadius = 0.6f;
 
+        [SerializeField]
+        protected int _teamID;
+
         protected float _lastAttack;
         protected List<GameObject> _obs;
         private NavMeshAgent _navMeshAgent;
@@ -95,6 +98,11 @@ namespace AI.Master
             get { return _obs; }
         }
 
+        public int teamID
+        {
+            get { return _teamID; }
+        }
+
         public NavMeshAgent navMeshAgent
         {
             get { return _navMeshAgent; }
@@ -133,10 +141,12 @@ namespace AI.Master
 
         private void OnDisable()
         {
-            if(this.mainBase != null)
-            {
-                this.mainBase.ReturnUnit(this);
-            }
+            //if(this.mainBase != null)
+            //{
+            //    this.mainBase.ReturnUnit(this);
+            //}
+
+            Destroy(this.gameObject);
           
         }
 
@@ -178,12 +188,12 @@ namespace AI.Master
 
         public bool IsAllied(UnitBase otherUnit)
         {
-            return ReferenceEquals(this.mainBase, otherUnit.mainBase);
+            return ReferenceEquals(this.teamID, otherUnit.teamID);
         }
 
         public bool IsAllied(MainBaseStructure mainBase)
         {
-            return ReferenceEquals(this.mainBase, mainBase);
+            return ReferenceEquals(this.teamID, teamID);
         }
 
         public virtual void RandomWander()
