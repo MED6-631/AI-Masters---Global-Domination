@@ -100,7 +100,7 @@
         {
             difficultyMultiplier = difficultyMultiplier + waveLevel;
 
-            enemySoldierAmount += Mathf.RoundToInt(difficultyMultiplier/2);
+            enemySoldierAmount += Mathf.RoundToInt(difficultyMultiplier/3);
             enemyEliteAmount += Mathf.RoundToInt(difficultyMultiplier / 4);
             enemyBossAmount += Mathf.RoundToInt(difficultyMultiplier / 6);
 

@@ -9,6 +9,7 @@
         public GameObject player;
         public GameObject companion;
         public GameObject master;
+        public GameObject waveButton;
 
 
         void Start()
@@ -27,7 +28,7 @@
             
             master.GetComponent<MasterScript>().playerHP = player.GetComponent<PlayerController>().currentHealth;
             master.GetComponent<MasterScript>().companionHP = companion.GetComponent<PathCompanionUnit>().currentHealth;
-
+            master.GetComponent<MasterScript>().waveButton = waveButton;
             if (player.GetComponent<PlayerController>().currentHealth <= 0)
             {
                 master.GetComponent<MasterScript>().isPlayerDead = true;
@@ -38,6 +39,11 @@
                 master.GetComponent<MasterScript>().isCompanionDead = true;
             }
 
+        }
+
+        public void AcquireMaster()
+        {
+            master.GetComponent<MasterScript>().LoadScene(5);
         }
     }
 }
