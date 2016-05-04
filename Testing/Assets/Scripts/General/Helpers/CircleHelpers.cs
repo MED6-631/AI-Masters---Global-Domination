@@ -13,5 +13,16 @@
                     position.y,
                     position.z + radius * Mathf.Cos(ang * Mathf.Deg2Rad));
         }
+
+        public static Vector3 GetUnitOnCircle(Vector3 position, float radius)
+        {
+            
+
+                return new Vector3(
+
+                    position.x + radius * Mathf.Sin(Mathf.Deg2Rad),
+                    position.y,
+                    position.z + radius * Mathf.Cos(Mathf.Deg2Rad));
+        }
     }
 }

@@ -46,13 +46,123 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AI Logic\CompanionAISteering.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\FSMAIControllerComponent.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\FSMCompanionAIComponent.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\FSMEliteAIComponent.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\FSMMinerAIComponent.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\FSMSoldierAIComponent.cs" />
      <Compile Include="Assets\Scripts\AI Logic\Steering.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\Attack.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\HarvestResource.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToAttackTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToBestCell.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToOwnNest.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToResourceTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\RandomWander.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\ReturnHarvest.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\ScanForGridCells.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\SetAttackTargetToNull.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\SetBestAttackTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\SetBestResourceTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\SetResourceTargetToNull.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\StopMoving.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Context\AIContext.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Context\ContextProvider.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Context\ControllerContext.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Context\ControllerContextProvider.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\CanCarryMoreHarvest.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasAttackTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasAttackTargetWithinRange.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEnemyNestInMemory.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEnemyUnitInMemory.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasOwnNestWithinReturnHarvestRadius.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasResourceInMemory.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasResourceTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasResourceTargetWithinRange.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\IsAttackTargetDead.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\IsMoving.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\BuildUnit.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\CanAfford.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\CanAffordUnitType.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\HasHarvesterCount.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\HasUnitCount.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\UnitCountContextualScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\AttackTargetAliveScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\AttackTargetLowHealthScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\AttackTargetProximityScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\AttackTargetTypeScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\CellAvgProximityToEnemiesScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\CellDistanceFromNearestEnemyScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\CellProximityScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\CellProximityToAttackTargetScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\CellProximityToEnemyNestScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\CellUnitDistanceScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\NearestResourceScorer.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\OptionScorers\RichestResourceScorer.cs" />
+     <Compile Include="Assets\Scripts\General\-Units-\MinerUnit.cs" />
+     <Compile Include="Assets\Scripts\General\-Units-\SoldierUnit.cs" />
+     <Compile Include="Assets\Scripts\General\Base\AIComponentBase.cs" />
+     <Compile Include="Assets\Scripts\General\Base\UnitBase.cs" />
+     <Compile Include="Assets\Scripts\General\Boosters\DMGUP.cs" />
+     <Compile Include="Assets\Scripts\General\Boosters\HealthPack.cs" />
+     <Compile Include="Assets\Scripts\General\Boosters\MoveUP.cs" />
+     <Compile Include="Assets\Scripts\General\Components\AIController.cs" />
+     <Compile Include="Assets\Scripts\General\Components\AIScannerComponent.cs" />
+     <Compile Include="Assets\Scripts\General\Components\CoroutineHelper.cs" />
+     <Compile Include="Assets\Scripts\General\Components\MainBaseStructure.cs" />
+     <Compile Include="Assets\Scripts\General\Components\PlayerCam.cs" />
+     <Compile Include="Assets\Scripts\General\Components\ResourceComponent.cs" />
+     <Compile Include="Assets\Scripts\General\Components\SinusComponent.cs" />
+     <Compile Include="Assets\Scripts\General\Components\TimeDebug.cs" />
+     <Compile Include="Assets\Scripts\General\Enum\UnitType.cs" />
+     <Compile Include="Assets\Scripts\General\Helpers\CircleHelpers.cs" />
+     <Compile Include="Assets\Scripts\General\Helpers\GameObjectDistanceSortComparer.cs" />
+     <Compile Include="Assets\Scripts\General\Helpers\Layers.cs" />
+     <Compile Include="Assets\Scripts\General\Helpers\UnitBaseDistanceSortComparer.cs" />
+     <Compile Include="Assets\Scripts\General\Helpers\UnitCostManager.cs" />
+     <Compile Include="Assets\Scripts\General\Helpers\UnitPool.cs" />
+     <Compile Include="Assets\Scripts\General\Helpers\UnitTypeComparer.cs" />
+     <Compile Include="Assets\Scripts\General\Interface\ICanDie.cs" />
+     <Compile Include="Assets\Scripts\General\Linker.cs" />
      <Compile Include="Assets\Scripts\General\MarkerTest.cs" />
-     <Compile Include="Assets\Scripts\General\PlayerCam.cs" />
-     <Compile Include="Assets\Scripts\General\SpawnTest.cs" />
+     <Compile Include="Assets\Scripts\General\MasterScript.cs" />
+     <Compile Include="Assets\Scripts\General\Misc\OnHold.cs" />
+     <Compile Include="Assets\Scripts\General\Misc\VertHandler.cs" />
+     <Compile Include="Assets\Scripts\General\Misc\bulletScript.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\Cell.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\Grid.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\GridVisualizer.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\Path.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\PathCompanionUnit.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\PathEliteUnit.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\PathMinerUnit.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\PathNode.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\PathSoldierUnit.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\Pathfinder.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\SteerForPath.cs" />
+     <Compile Include="Assets\Scripts\General\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\General\StateChecker.cs" />
+     <Compile Include="Assets\Scripts\General\Steering\ISteeringComponent.cs" />
+     <Compile Include="Assets\Scripts\General\Steering\PatrolComponent.cs" />
+     <Compile Include="Assets\Scripts\General\Steering\SteerForBlockAvoidance.cs" />
+     <Compile Include="Assets\Scripts\General\Steering\SteerForUnitSeparation.cs" />
+     <Compile Include="Assets\Scripts\General\Steering\SteerableUnit.cs" />
+     <Compile Include="Assets\Scripts\General\Steering\SteeringInput.cs" />
+     <Compile Include="Assets\Scripts\General\Steering\SteeringScanner.cs" />
+     <Compile Include="Assets\Scripts\General\Tools.cs" />
      <Compile Include="Assets\Scripts\General\Unit.cs" />
      <Compile Include="Assets\Scripts\General\UnitManager.cs" />
      <Compile Include="Assets\Scripts\General\UnitSelection.cs" />
+     <Compile Include="Assets\Scripts\General\Visualizers\AIControllerVisualizer.cs" />
+     <Compile Include="Assets\Scripts\General\Visualizers\DestinationVisualizer.cs" />
+     <Compile Include="Assets\Scripts\General\Visualizers\EmoticonCommunicationSystem.cs" />
+     <Compile Include="Assets\Scripts\General\Visualizers\ObservationsVisualizer.cs" />
+     <Compile Include="Assets\Scripts\General\Visualizers\SteeringVisualizer.cs" />
+     <Compile Include="Assets\Scripts\General\WaveManagement\BoosterMaster.cs" />
+     <Compile Include="Assets\Scripts\General\WaveManagement\WaveMaster.cs" />
+     <Compile Include="Assets\Scripts\General\WaveManagement\WaveSpawner.cs" />
+     <None Include="Assets\Scripts\General\Shaders\SelectionCircle.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -61,6 +171,15 @@
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="ApexAI">
+ <HintPath>D:/Student Files/Universitet/Medialogy/6th Semester/Bachelor Project/Implementation/Testing/Assets/Apex/Apex Binaries/ApexAI.dll</HintPath>
+ </Reference>
+ <Reference Include="ApexSerialization">
+ <HintPath>D:/Student Files/Universitet/Medialogy/6th Semester/Bachelor Project/Implementation/Testing/Assets/Apex/Apex Binaries/ApexSerialization.dll</HintPath>
+ </Reference>
+ <Reference Include="ApexShared">
+ <HintPath>D:/Student Files/Universitet/Medialogy/6th Semester/Bachelor Project/Implementation/Testing/Assets/Apex/Apex Binaries/ApexShared.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

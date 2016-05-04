@@ -12,7 +12,7 @@
         private float currentSpeed = 5.0f;
         public float gravity = 20.0f;
         public float maxVelocityChange = 10.0f;
-        private float fastSpeed;
+        public float fastSpeed;
         //private EmoticonCommunicationSystem ECS;
         private Vector3 moveDirection = Vector3.zero;
         public Rigidbody rigC;
@@ -20,6 +20,7 @@
         public Transform point;
         private GameObject master;
         private float shootTime = 0;
+        public int Damage;
         public override UnitType type
         {
             get { return UnitType.Player; }
@@ -92,8 +93,13 @@
 
             if(Input.GetKey(KeyCode.Q))
             {
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
                 GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = true;
-                //GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().AcquiredTarget(this.transform.position);
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = true;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
 
             }
 
@@ -110,6 +116,7 @@
                 if(shootTime >= 0.2f)
                 {
                     tempBullet = Instantiate(bullet, point.transform.position, point.transform.rotation) as GameObject;
+                    tempBullet.GetComponent<bulletScript>().AcquireDamage(Damage);
                     shootTime = 0;
                 }
             }

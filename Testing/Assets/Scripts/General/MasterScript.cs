@@ -7,6 +7,9 @@
     {
         //public bool waveStarted = false;
         public int pickedUpBoosters;
+        private int pickedUpHealth;
+        private int pickedUpDMG;
+        private int pickedUpMove;
         public int timer;
         public Font b;
         public float sec;
@@ -24,8 +27,14 @@
         private WaveMaster wM;
         private Vector3 pC;
         public GameObject tutlabel;
+        public GameObject objlabel;
         public GameObject waveButton;
         public GameObject returnButton;
+        public float dmgBoostTime;
+        public float moveBoostTime;
+        public bool isDMGBoost;
+        public bool isMoveBoost;
+        public bool isHealthBoost;
 
 
         void Start()
@@ -96,7 +105,39 @@
                 Application.LoadLevel("Victory");
             }
 
+            if(isMoveBoost)
+            {
+                moveBoostTime = 10;
+                pickedUpBoosters++;
+                pickedUpMove++;
+                isMoveBoost = false;
+               
+            }
 
+            if(isDMGBoost)
+            {
+                dmgBoostTime = 10;
+                pickedUpBoosters++;
+                pickedUpDMG++;
+                isDMGBoost = false;
+            }
+
+            if(isHealthBoost)
+            {
+                pickedUpBoosters++;
+                pickedUpHealth++;
+                isHealthBoost = false;
+            }
+
+            if(dmgBoostTime >= 0)
+            {
+                dmgBoostTime -= Time.deltaTime;
+            }
+
+            if(moveBoostTime >= 0)
+            {
+                moveBoostTime -= Time.deltaTime;
+            }
 
         }
 
@@ -116,11 +157,23 @@
                 GUI.Label(new Rect(Screen.width / 3.75f, Screen.height / 20, Screen.width / 8, Screen.height / 8), "M : " + min, myFont);
                 GUI.Label(new Rect(Screen.width / 3, Screen.height / 20, Screen.width / 8, Screen.height / 8), "S : " + Mathf.RoundToInt(sec), myFont);
                 GUI.Label(new Rect(Screen.width / 20, Screen.height / 10, Screen.width/8, Screen.height/8), "Player Health: " + Mathf.RoundToInt(playerHP) + " \n \nCompanion Health: " + Mathf.RoundToInt(companionHP), myFont);
+                if(dmgBoostTime >= 0)
+                {
+                    GUI.Label(new Rect(Screen.width -400, Screen.height / 8, Screen.width / 8, Screen.height / 8), "DMG Boost Time: " + Mathf.RoundToInt(dmgBoostTime), myFont);
+                    
+                }
+                if(moveBoostTime >= 0)
+                {
+                    GUI.Label(new Rect(Screen.width -400, Screen.height / 6, Screen.width / 8, Screen.height / 8), "Move Boost Time: " + Mathf.RoundToInt(moveBoostTime), myFont);
+                    
 
-                if(Input.GetKey(KeyCode.Mouse2))
+                }
+                
+
+                if (Input.GetKey(KeyCode.Mouse2))
                 {
                     
-                    Rect guiRect = new Rect(Screen.width/2-200, Screen.height/2-50, 100, 100);
+                    Rect guiRect = new Rect(Screen.width/2-200, Screen.height/2-50, 200, 200);
 
                     GUILayout.BeginArea(guiRect, "CompanionAI Commands", myFont);
                     GUILayout.Space(30);
@@ -128,14 +181,51 @@
                     if (GUILayout.Button("Aggressive"))
                     {
                         GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
                         GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().t = null;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().RandomWander();
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = true;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+
+
                     }
 
                     if (GUILayout.Button("Defensive"))
                     {
                         GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
                         GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = true;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = true;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+                    }
+
+                    if(GUILayout.Button("Collector"))
+                    {
+                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Neutral;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = true;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+
+
+                    }
+
+                    if (GUILayout.Button("Patrol"))
+                    {
+                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
+                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = true;
+
+
                     }
 
                     GUILayout.EndArea();
@@ -172,6 +262,7 @@
                 {
                     //GUI.Label(new Rect(Screen.width / 2 -200, Screen.height / 8, Screen.width / 20, Screen.height / 20), "Controls: \nW = Up, S = Down, A = Left, D = Right, Q = Recall Companion\nSpace = shoot, Right Mousebutton = Move Companion to location \nHold Middle Mousebutton to show AI Behavior Menu \nThe Emoticons can be used to communicate \nwith the Companion AI who knows may do something\n", myFont);
                     tutlabel.SetActive(true);
+                    objlabel.SetActive(true);
                 }
                 else if(!tutorial)
                 {
@@ -183,6 +274,7 @@
 
                     //}
                     tutlabel.SetActive(false);
+                    objlabel.SetActive(false);
                 }
             }
 
@@ -191,7 +283,7 @@
                 //myFont.fontSize = 64;
                 //GUI.Label(new Rect(Screen.width / 2.5f, Screen.height / 2, 100, 30), "Game Over", myFont);
                 myFont.fontSize = 18;
-                GUI.Label(new Rect(25, 25, 100, 30), "Total Time: \n Hours: " + hour + " Minutes: " + min + " Seconds: " + sec, myFont);
+                GUI.Label(new Rect(25, 25, 100, 200), "Total Time: \n Hours: " + hour + " Minutes: " + min + " Seconds: " + sec + " \n\nAmount of Booster collected : " + pickedUpBoosters + " \nHealth Packs : " + pickedUpHealth + " \nDamage Boosters : " + pickedUpDMG + " \nMoveSpeed Boosters : " + pickedUpMove, myFont);
                 myFont.fontSize = 24;
                 if(isPlayerDead)
                 {
@@ -216,7 +308,7 @@
                 //myFont.fontSize = 64;
                 //GUI.Label(new Rect(Screen.width / 2.5f, Screen.height / 2, 100, 30), "You Won!", myFont);
                 myFont.fontSize = 18;
-                GUI.Label(new Rect(25, 25, 100, 30), "Total Time: \n Hours: " + hour + " Minutes: " + min + " Seconds: " + sec, myFont);
+                GUI.Label(new Rect(25, 25, 100, 200), "Total Time: \n Hours: " + hour + " Minutes: " + min + " Seconds: " + sec+" \n\nAmount of Booster collected : "+pickedUpBoosters+" \nHealth Packs : "+pickedUpHealth+" \nDamage Boosters : "+pickedUpDMG+" \nMoveSpeed Boosters : "+pickedUpMove, myFont);
                 myFont.fontSize = 24;
                 //if (GUI.Button(new Rect(Screen.width / 2.5f, Screen.height / 1.25f, 100, 30), "Return to Main Menu", myFont))
                 //{

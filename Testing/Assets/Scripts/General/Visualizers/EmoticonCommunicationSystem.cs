@@ -69,19 +69,10 @@
             companionPos = Camera.main.WorldToScreenPoint(GameObject.FindGameObjectWithTag("companion").transform.position);
 
 
-
-
-
-        }
-
-        void OnGUI()
-        {
-           rnd = Mathf.RoundToInt(Random.Range(0, 2));
-
-            if(stated)
+           if(stated)
             {
-                
-                if (companionHP < 200 && companion.ReturnToPlayer == false)
+
+                if (companionHP <= 200 && companion.ReturnToPlayer == false && companionHP >= 100)
                 {
                     _currentCompanionState = CompanionEmotionState.Sad;
                     stated = false;
@@ -109,8 +100,17 @@
 
 
                 }
-                
+
             }
+
+
+        }
+
+        void OnGUI()
+        {
+           rnd = Mathf.RoundToInt(Random.Range(0, 2));
+
+
 
 
             if (GUI.Button(new Rect(Screen.width-350, Screen.height - 50, 50,50 ),emoticons[0]))
@@ -266,6 +266,7 @@
             }
 
         }
+
 
 
 

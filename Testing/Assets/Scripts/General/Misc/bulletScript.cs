@@ -41,6 +41,11 @@
             }
 
         }
+
+       public void AcquireDamage( float damage)
+        {
+            bulletDMG = damage;
+        }
     }
 
 }
