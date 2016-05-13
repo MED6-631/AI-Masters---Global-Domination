@@ -12,7 +12,8 @@ namespace AI.Master
     public abstract class UnitBase : MonoBehaviour, ICanDie
     {
 
-        private const float destinationBufferRadius = 2f;
+        private const float destinationBufferRadius = 3f;
+        private const float destinationCenter = 0.5f;
 
         [SerializeField]
         private ParticleSystem _deathEffect;
@@ -54,7 +55,6 @@ namespace AI.Master
 
 
         public abstract UnitType type { get; }
-
 
         public int id
         {
@@ -157,7 +157,7 @@ namespace AI.Master
         }
 
 
-        protected float GetDamage()
+        public float GetDamage()
         {
             return Random.Range(_minDamage, _maxDamage);
         }
@@ -224,6 +224,16 @@ namespace AI.Master
             }
         }
 
+        public virtual void MoveToSpot(Vector3 destination)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(destination, out hit, destinationCenter, _navMeshAgent.areaMask))
+            {
+                _navMeshAgent.Resume();
+                _navMeshAgent.SetDestination(hit.position);
+            }
+        }
+
         public virtual void StopMoving()
         {
             _navMeshAgent.Stop();
@@ -260,7 +270,7 @@ namespace AI.Master
         private IEnumerator CleanUpEffect(ParticleSystem effect)
         {
             yield return new WaitForSeconds(effect.duration);
-            effect.transform.SetParent(this.transform);
+            effect.gameObject.SetActive(false);
         }
 
         public void Attack()
@@ -276,7 +286,36 @@ namespace AI.Master
             InternalAttack(GetDamage());
         }
 
-        protected abstract void InternalAttack(float dmg);
+        //public void COInternalAttack(float dmg)
+        //{
+        //    var hits = Physics.OverlapSphere(this.transform.position, _attackRadius, Layers.mortal);
+        //    for (int i = 0; i < hits.Length; i++)
+        //    {
+        //        var hit = hits[i];
+        //        if (ReferenceEquals(hit.gameObject, this.gameObject))
+        //        {
+        //            continue;
+        //        }
+
+        //        var unit = hit.GetComponent<UnitBase>();
+        //        if (unit != null && unit.teamID != 2)
+        //        {
+        //            this.LookAt(unit.transform.position);
+        //            unit.ReceiveDamage(dmg);
+        //            return;
+        //        }
+
+        //        var mainBase = hit.GetComponent<MainBaseStructure>();
+        //        if (mainBase != null)
+        //        {
+        //            this.LookAt(mainBase.transform.position);
+        //            mainBase.ReceiveDamage(dmg);
+        //            return;
+        //        }
+        //    }
+        //}
+
+        public abstract void InternalAttack(float dmg);
 
     }
 }

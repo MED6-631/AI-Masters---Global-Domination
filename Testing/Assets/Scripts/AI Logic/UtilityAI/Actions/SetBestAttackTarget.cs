@@ -4,7 +4,7 @@
     using Apex.AI;
     using Apex.Utilities;
 
-    public sealed class SetBestAttackTarget : ActionWithOptions<ICanDie>
+    public class SetBestAttackTarget : ActionWithOptions<ICanDie>
     {
         public override void Execute(IAIContext context)
         {
@@ -34,7 +34,7 @@
                 var obsUnit = obs.GetComponent<UnitBase>();
                 if (obsUnit != null)
                 {
-                    if (unit.IsAllied(obsUnit))
+                    if (unit.teamID == 2)
                     {
                         // ignored allied units
                         continue;

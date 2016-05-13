@@ -47,7 +47,7 @@
                     continue;
                 }
 
-                if (unit.IsAllied(obsBase))
+                if (unit.teamID == 2)
                 {
                     continue;
                 }

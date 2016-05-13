@@ -47,7 +47,7 @@
         {
 
 
-            if(LevelCheck == 1)
+            if(LevelCheck == 1 || LevelCheck == 4)
             {
                 sec += Time.deltaTime;
                 if (sec > 59)
@@ -83,6 +83,11 @@
             if(Application.loadedLevelName == "Level01")
             {
                 LevelCheck = 1;
+            }
+
+            if(Application.loadedLevelName == "Level02")
+            {
+                LevelCheck = 4;
             }
 
             if(Application.loadedLevelName == "Victory")
@@ -148,7 +153,7 @@
             myFont.normal.textColor = Color.white;
             myFont.fontSize = 24;
 
-            if(LevelCheck == 1)
+            if(LevelCheck == 1 || LevelCheck == 4)
             {
 
                 wM = GameObject.FindGameObjectWithTag("waveMaster").GetComponent<WaveMaster>();
@@ -180,50 +185,106 @@
 
                     if (GUILayout.Button("Aggressive"))
                     {
-                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().t = null;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+                        if(LevelCheck == 1)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().t = null;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+                        }
+                        else if(LevelCheck == 4)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().t = null;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Aggressive = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Defensive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Collector = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Patrol = false;
+                        }
+
 
 
                     }
 
                     if (GUILayout.Button("Defensive"))
                     {
-                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+                        if(LevelCheck == 1)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+                        }
+                        else if(LevelCheck == 4)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
+                            //GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().ReturnToPlayer = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Defensive = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Aggressive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Collector = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Patrol = false;
+                        }
+
                     }
 
                     if(GUILayout.Button("Collector"))
                     {
-                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Neutral;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+                        if(LevelCheck == 1)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Neutral;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+                        }
+                        else if (LevelCheck == 4)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Neutral;
+                            //GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().ReturnToPlayer = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Defensive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Aggressive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Collector = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Patrol = false;
+                        }
+
 
 
                     }
 
                     if (GUILayout.Button("Patrol"))
                     {
-                        GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
-                        GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = true;
+                        if(LevelCheck == 1)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Defensive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = true;
+                        }
+                        else if (LevelCheck == 4)
+                        {
+                            GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Angry;
+                            //GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().resetPath = true;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().ReturnToPlayer = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Defensive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Aggressive = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Collector = false;
+                            GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Patrol = true;
+                        }
+
 
 
                     }
@@ -345,6 +406,10 @@
             else if(scene == 5)
             {
                 startWave = true;
+            }
+            else if(scene == 6)
+            {
+                Application.LoadLevel("Level02");
             }
             else
             {

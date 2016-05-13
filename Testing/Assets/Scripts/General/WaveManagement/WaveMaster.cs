@@ -104,8 +104,16 @@
             enemyEliteAmount += Mathf.RoundToInt(difficultyMultiplier / 4);
             enemyBossAmount += Mathf.RoundToInt(difficultyMultiplier / 6);
 
+            if(GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().LevelCheck == 1)
+            {
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().HealDamage(500);
+            }
+            else if(GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().LevelCheck == 4)
+            {
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().HealDamage(500);
+            }
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().HealDamage(100);
-            GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().HealDamage(500);
+
 
          }
 

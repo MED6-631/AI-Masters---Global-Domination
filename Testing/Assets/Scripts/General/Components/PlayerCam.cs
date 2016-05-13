@@ -21,7 +21,7 @@
         public GameObject markerClone;
         public Transform player;
         public Transform companionAI;
-        private float y;
+        private float y = 20;
 
         private void FixedUpdate()
         {
@@ -111,11 +111,16 @@
                     pressed = true;
                 }
 
-                if(marker != null)
+                if(marker != null && GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().LevelCheck == 1)
                 {
                     GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().ReturnToPlayer = false;
                 }
-               
+
+                if (marker != null && GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().LevelCheck == 4)
+                {
+                    GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().ReturnToPlayer = false;
+                }
+
             }
 
             Vector3 location;

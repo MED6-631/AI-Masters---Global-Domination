@@ -11,7 +11,7 @@
         public override float Score(IAIContext context)
         {
             var c = (AIContext)context;
-            if (c.unit.isMoving)
+            if (c.cs.isMoving)
             {
                 // unit is moving
                 return this.not ? 0f : this.score;

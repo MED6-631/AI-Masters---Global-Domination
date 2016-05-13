@@ -44,7 +44,7 @@
             get { return _maxCarriableResources; }
         }
 
-        protected override void InternalAttack(float dmg)
+        public override void InternalAttack(float dmg)
         {
             var hits = Physics.OverlapSphere(this.transform.position, _attackRadius, Layers.mortal);
             for (int i = 0; i < hits.Length; i++)

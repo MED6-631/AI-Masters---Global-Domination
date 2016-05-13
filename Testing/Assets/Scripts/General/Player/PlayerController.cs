@@ -91,7 +91,7 @@
 
             rigC.AddForce(new Vector3(0, -gravity * rigC.mass, 0));
 
-            if(Input.GetKey(KeyCode.Q))
+            if(Input.GetKey(KeyCode.Q) && master.GetComponent<MasterScript>().LevelCheck == 1)
             {
                 GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
                 GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().resetPath = true;
@@ -100,6 +100,18 @@
                 GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Aggressive = false;
                 GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Collector = false;
                 GameObject.FindGameObjectWithTag("companion").GetComponent<PathCompanionUnit>().Patrol = false;
+
+            }
+
+            if (Input.GetKey(KeyCode.Q) && master.GetComponent<MasterScript>().LevelCheck == 4)
+            {
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<EmoticonCommunicationSystem>()._currentCompanionState = EmoticonCommunicationSystem.CompanionEmotionState.Happy;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().resetPath = true;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().ReturnToPlayer = true;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Defensive = true;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Aggressive = false;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Collector = false;
+                GameObject.FindGameObjectWithTag("companion").GetComponent<PathUtilityCompanionUnit>().Patrol = false;
 
             }
 
@@ -132,7 +144,7 @@
 
         }
 
-        protected override void InternalAttack(float dmg)
+        public override void InternalAttack(float dmg)
         {
             throw new NotImplementedException();
         }

@@ -13,7 +13,7 @@
 
         public override float Score(IAIContext context, ICanDie option)
         {
-            if (!option.isDead)
+            if (option != null)
             {
                 // The option being evaluated is not dead
                 return this.not ? 0f : this.score;

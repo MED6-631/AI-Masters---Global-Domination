@@ -11,13 +11,13 @@
         public override float Score(IAIContext context)
         {
             var c = (AIContext)context;
-            if (c.attackTarget == null)
-            {
-                // unit has no attack target
-                return 0f;
-            }
+            //if (c.attackTarget == null)
+            //{
+            //    // unit has no attack target
+            //    return 0f;
+            //}
 
-            if (c.attackTarget.isDead)
+            if (c.attackTarget == null)
             {
                 // the attack target is dead
                 return this.not ? 0f : this.score;

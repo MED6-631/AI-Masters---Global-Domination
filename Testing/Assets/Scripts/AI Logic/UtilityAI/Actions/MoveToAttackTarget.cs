@@ -1,7 +1,7 @@
 ﻿namespace AI.Master
 {
     using Apex.AI;
-    public sealed class MoveToAttackTarget : ActionBase
+    public class MoveToAttackTarget : ActionBase
     {
         public override void Execute(IAIContext context)
         {

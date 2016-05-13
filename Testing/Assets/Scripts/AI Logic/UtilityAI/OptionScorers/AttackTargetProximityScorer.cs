@@ -15,7 +15,7 @@
         public override float Score(IAIContext context, ICanDie option)
         {
             var c = (AIContext)context;
-            var distance = (c.position - option.transform.position).magnitude * this.distanceFactor;
+            var distance = (c.pucu.transform.position - option.transform.position).magnitude * this.distanceFactor;
             return Mathf.Max(0f, this.maxScore - distance);
         }
     }

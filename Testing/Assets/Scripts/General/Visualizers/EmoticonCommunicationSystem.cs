@@ -76,6 +76,7 @@
                 {
                     _currentCompanionState = CompanionEmotionState.Sad;
                     stated = false;
+                    StartCoroutine(stateInterval(3));
 
                 }
 
@@ -83,6 +84,7 @@
                 {
                     _currentCompanionState = CompanionEmotionState.Happy;
                     stated = false;
+                    StartCoroutine(stateInterval(3));
 
                 }
 
@@ -90,6 +92,7 @@
                 {
                     _currentCompanionState = CompanionEmotionState.Neutral;
                     stated = false;
+                    StartCoroutine(stateInterval(3));
 
                 }
 
@@ -97,6 +100,7 @@
                 {
                     _currentCompanionState = CompanionEmotionState.Angry;
                     stated = false;
+                    StartCoroutine(stateInterval(3));
 
 
                 }
@@ -218,22 +222,22 @@
                 case CompanionEmotionState.Neutral:
                     selectEmoji = 0;
                     GUI.Label(new Rect(companionPos.x + offsetX, companionPos.y + offsetY+55, 100, 50), emoticons[selectEmoji]);
-                    StartCoroutine(emoticonInterval(compaionInterval, true));
+                    //StartCoroutine(emoticonInterval(compaionInterval, true));
                     break;
                 case CompanionEmotionState.Angry:
                     selectEmoji = 1;
                     GUI.Label(new Rect(companionPos.x + offsetX, companionPos.y + offsetY+55, 100, 50), emoticons[selectEmoji]);
-                    StartCoroutine(emoticonInterval(compaionInterval, true));
+                    //StartCoroutine(emoticonInterval(compaionInterval, true));
                     break;
                 case CompanionEmotionState.Happy:
                     selectEmoji = 2;
                     GUI.Label(new Rect(companionPos.x + offsetX, companionPos.y + offsetY+55, 100, 50), emoticons[selectEmoji]);
-                    StartCoroutine(emoticonInterval(compaionInterval, true));
+                    //StartCoroutine(emoticonInterval(compaionInterval, true));
                     break;
                 case CompanionEmotionState.Sad:
                     selectEmoji = 3;
                     GUI.Label(new Rect(companionPos.x + offsetX, companionPos.y + offsetY+55, 100, 50), emoticons[selectEmoji]);
-                    StartCoroutine(emoticonInterval(compaionInterval, true));
+                    //StartCoroutine(emoticonInterval(compaionInterval, true));
                     break;
                 case CompanionEmotionState.None:
                     StopAllCoroutines();
@@ -265,6 +269,12 @@
                 }
             }
 
+        }
+
+        IEnumerator stateInterval(float time)
+        {
+            yield return new WaitForSeconds(time);
+            stated = true;
         }
 
 

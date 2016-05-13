@@ -17,9 +17,15 @@
                 GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().isHealthBoost = true;
                 Destroy(this.gameObject);
             }
-            else if(other.gameObject.tag.Contains("companion"))
+            else if(other.gameObject.tag.Contains("companion") && GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().LevelCheck == 1)
             {
                 other.GetComponent<PathCompanionUnit>().HealDamage(CHealth);
+                GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().isHealthBoost = true;
+                Destroy(this.gameObject);
+            }
+            else if(other.gameObject.tag.Contains("companion") && GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().LevelCheck == 4)
+            {
+                other.GetComponent<PathUtilityCompanionUnit>().HealDamage(CHealth);
                 GameObject.FindGameObjectWithTag("master").GetComponent<MasterScript>().isHealthBoost = true;
                 Destroy(this.gameObject);
             }

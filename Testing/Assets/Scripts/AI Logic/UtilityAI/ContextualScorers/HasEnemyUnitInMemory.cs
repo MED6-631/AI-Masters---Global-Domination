@@ -21,6 +21,7 @@
         {
             var c = (AIContext)context;
             var unit = c.unit;
+            //var unit = c.cs;
             var observations = unit.obs;
             var count = observations.Count;
             if (count == 0)
@@ -44,13 +45,14 @@
             {
                 var obs = observations[i];
                 var obsUnit = obs.GetComponent<UnitBase>();
+
                 if (obsUnit == null)
                 {
                     // observation is not of a unit
                     continue;
                 }
 
-                if (unit.IsAllied(obsUnit))
+                if (unit.teamID == 2)
                 {
                     // unit is allied, so it is not an enemy
                     continue;

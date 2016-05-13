@@ -12,6 +12,8 @@
             this.gameObject = gameObject;
             this.unit = gameObject.GetComponent<UnitBase>();
             this.sampledCells = new List<Cell>(64);
+            this.pucu = gameObject.GetComponent<PathUtilityCompanionUnit>();
+            this.cs = gameObject.GetComponent<CompanionAISteering>();
         }
 
         /// <summary>
@@ -80,6 +82,18 @@
         /// The attack target.
         /// </value>
         public ICanDie attackTarget
+        {
+            get;
+            set;
+        }
+
+        public PathUtilityCompanionUnit pucu
+        {
+            get;
+            set;
+        }
+
+        public CompanionAISteering cs
         {
             get;
             set;

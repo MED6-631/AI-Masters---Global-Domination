@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Apex\AINameMap.cs" />
      <Compile Include="Assets\Scripts\AI Logic\CompanionAISteering.cs" />
      <Compile Include="Assets\Scripts\AI Logic\FSMAIControllerComponent.cs" />
      <Compile Include="Assets\Scripts\AI Logic\FSMCompanionAIComponent.cs" />
@@ -57,7 +58,12 @@
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\HarvestResource.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToAttackTarget.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToBestCell.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToBoosterSpawnTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToBoosterTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToEnemySpawnerTarget.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToMarkerPoint.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToOwnNest.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToPlayerTarget.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\MoveToResourceTarget.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\RandomWander.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\Actions\ReturnHarvest.cs" />
@@ -74,14 +80,26 @@
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\CanCarryMoreHarvest.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasAttackTarget.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasAttackTargetWithinRange.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasBoosterWithinRange.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEmotionANGRY.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEmotionHAPPY.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEmotionNEUTRAL.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEmotionSAD.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEnemyNestInMemory.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasEnemyUnitInMemory.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasMarkerPoint.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasOwnNestWithinReturnHarvestRadius.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasPlayerUnitWithinRange.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasResourceInMemory.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasResourceTarget.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasResourceTargetWithinRange.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasStanceAGGRESSIVE.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasStanceCOLLECTOR.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasStanceDEFENSIVE.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\HasStancePATROL.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\IsAttackTargetDead.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\IsMoving.cs" />
+     <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ContextualScorers\IsReturnToPlayer.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\BuildUnit.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\CanAfford.cs" />
      <Compile Include="Assets\Scripts\AI Logic\UtilityAI\ControllerAI\CanAffordUnitType.cs" />
@@ -127,6 +145,7 @@
      <Compile Include="Assets\Scripts\General\Linker.cs" />
      <Compile Include="Assets\Scripts\General\MarkerTest.cs" />
      <Compile Include="Assets\Scripts\General\MasterScript.cs" />
+     <Compile Include="Assets\Scripts\General\Misc\AIToggle.cs" />
      <Compile Include="Assets\Scripts\General\Misc\OnHold.cs" />
      <Compile Include="Assets\Scripts\General\Misc\VertHandler.cs" />
      <Compile Include="Assets\Scripts\General\Misc\bulletScript.cs" />
@@ -139,6 +158,7 @@
      <Compile Include="Assets\Scripts\General\Pathfinding\PathMinerUnit.cs" />
      <Compile Include="Assets\Scripts\General\Pathfinding\PathNode.cs" />
      <Compile Include="Assets\Scripts\General\Pathfinding\PathSoldierUnit.cs" />
+     <Compile Include="Assets\Scripts\General\Pathfinding\PathUtilityCompanionUnit.cs" />
      <Compile Include="Assets\Scripts\General\Pathfinding\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\General\Pathfinding\SteerForPath.cs" />
      <Compile Include="Assets\Scripts\General\Player\PlayerController.cs" />
@@ -163,6 +183,9 @@
      <Compile Include="Assets\Scripts\General\WaveManagement\WaveMaster.cs" />
      <Compile Include="Assets\Scripts\General\WaveManagement\WaveSpawner.cs" />
      <None Include="Assets\Scripts\General\Shaders\SelectionCircle.shader" />
+     <None Include="Assets\Apex\Apex Utility AI\ChangeLog.txt" />
+     <None Include="Assets\Apex\Apex AI Examples and Documentation\GetYourLicense.txt" />
+     <None Include="Assets\Apex\Apex AI Examples and Documentation\Additional Documentation Online.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
